@@ -58,13 +58,17 @@ void Drawpath(vector<state> path_points) {
 int main()
 {
 	bool terminate = false;
-	double q0[] = { 100,200,-4.71 };
-	double q1[] = { 350,350,-1.57 };
+
+
+	double start[] = { 100,200,-4.71 };
+	double goal[] = { 800,800,-1.57 };
 	double turning_radius = 22.0;
 	DubinsPath path;
-	dubins_shortest_path(&path, q0, q1, turning_radius);
+	dubins_shortest_path(&path, start, goal, turning_radius);
 	
 	dubins_path_sample_many(&path, 2, printConfiguration, NULL);
+
+	//Adjust the size of window accordingly, current designed for a 4K display
 	FsOpenWindow(0, 0, 1600, 1600, 1);
 
 	while (!terminate) {
@@ -73,10 +77,10 @@ int main()
 		if (key == FSKEY_ESC) {
 			terminate = true;
 		}
-		/*for (int i = 0; i < path_points.size(); i++) {
+		for (int i = 0; i < path_points.size(); i++) {
 			Drawcar(path_points[i].x, path_points[i].y, path_points[i].angle);
 			
-		}*/
+		}
 		Drawpath(path_points);
 		glFlush();
 		FsSwapBuffers();
